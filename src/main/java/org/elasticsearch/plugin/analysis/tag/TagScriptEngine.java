@@ -1,7 +1,5 @@
 package org.elasticsearch.plugin.analysis.tag;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.PostingsEnum;
@@ -21,17 +19,12 @@ import java.util.Map;
 
 public class TagScriptEngine implements ScriptEngine{
 
-    private static final String SCRIPT_NAME = "tag_weight";
-
-    private static final String SCRIPT_SOURCE = "test";
 
     protected final Logger logger =  Loggers.getLogger(getClass());
 
-
-
     @Override
     public String getType() {
-        return SCRIPT_NAME;
+        return TagScriptConfig.SCRIPT_NAME;
     }
 
     @Override
@@ -41,11 +34,12 @@ public class TagScriptEngine implements ScriptEngine{
                     + " scripts cannot be used for context ["
                     + context.name + "]");
         }
-        if (!code.equals(SCRIPT_SOURCE)){
+        if (!code.equals(TagScriptConfig.SCRIPT_SOURCE)){
             throw new IllegalArgumentException("Unknown script name " + code);
         }
         SearchScript.Factory factory = (p, lookup) -> new SearchScript.LeafFactory() {
 
+            //check parameters legal
             final String tag_id;
             final String[] tag_ids;
             {
@@ -62,15 +56,15 @@ public class TagScriptEngine implements ScriptEngine{
                 return new SearchScript(p, lookup, context) {
                     @Override
                     public double runAsDouble() {
-                        SourceLookup source = lookup.source();
-                        Double score = 0d;
-                        logger.info("========" + source.get("tag").getClass().toString() + "=========");
-                        HashMap tag = (HashMap) source.get("tag");
-                        for (String tag_id : tag_ids) {
-//                            如果没获取标签直接跳过
-                            if (!tag.containsKey(tag_id)) continue;
-                            score += (Double)(tag.get(tag_id));
+                        //calc script score here
+                        Double score = getScore();
+                        try {
+                            SourceLookup source = lookup.source();
+                            HashMap tag = (HashMap) source.get("tag");
+                        }catch (Exception e){
+                            logger.error("calc script score error", e);
                         }
+
                         return score;
                     }
 
