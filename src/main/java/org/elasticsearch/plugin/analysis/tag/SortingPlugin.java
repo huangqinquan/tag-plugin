@@ -9,11 +9,11 @@ import org.elasticsearch.script.ScriptEngine;
 
 import java.util.Collection;
 
-public class TagScriptPlugin extends Plugin implements ScriptPlugin{
+public class SortingPlugin extends Plugin implements ScriptPlugin{
 
     @Override
     public ScriptEngine getScriptEngine(Settings settings, Collection<ScriptContext<?>> contexts) {
-        return new TagScriptEngine();
+        return new SortingEngine();
     }
 
 }

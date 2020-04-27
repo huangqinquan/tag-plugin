@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.meitu</groupId>
-    <artifactId>tag-plugin</artifactId>
+    <artifactId>SortingPlugin</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <name>SortingPlugin</name>
@@ -13,7 +13,7 @@
 
 
     <properties>
-        <elasticsearch.plugin.name>test.plugin</elasticsearch.plugin.name>
+        <elasticsearch.plugin.name>SortingPlugin</elasticsearch.plugin.name>
         <elasticsearch.plugin.classname>com.elasticsearch.plugin.TestPlugin</elasticsearch.plugin.classname>
         <elasticsearch.plugin.java.version>1.8</elasticsearch.plugin.java.version>
         <elasticsearch.version>6.3.2</elasticsearch.version>

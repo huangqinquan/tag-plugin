@@ -17,14 +17,14 @@ import java.io.UncheckedIOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TagScriptEngine implements ScriptEngine{
+public class SortingEngine implements ScriptEngine{
 
 
     protected final Logger logger =  Loggers.getLogger(getClass());
 
     @Override
     public String getType() {
-        return TagScriptConfig.SCRIPT_NAME;
+        return SortingConfig.SCRIPT_NAME;
     }
 
     @Override
@@ -34,28 +34,27 @@ public class TagScriptEngine implements ScriptEngine{
                     + " scripts cannot be used for context ["
                     + context.name + "]");
         }
-        if (!code.equals(TagScriptConfig.SCRIPT_SOURCE)){
+        if (!code.equals(SortingConfig.SCRIPT_SOURCE)){
             throw new IllegalArgumentException("Unknown script name " + code);
         }
         SearchScript.Factory factory = (p, lookup) -> new SearchScript.LeafFactory() {
-
-            //check parameters legal
-            final String tag_id;
-            final String[] tag_ids;
-            {
-                if (p.containsKey("tag_id") == false) {
-                    throw new IllegalArgumentException("Missing parameter [tag_id]");
-                }
-
-                tag_id = p.get("tag_id").toString();
-                tag_ids = tag_id.split(" ");
-            }
 
             @Override
             public SearchScript newInstance(LeafReaderContext context) throws IOException {
                 return new SearchScript(p, lookup, context) {
                     @Override
                     public double runAsDouble() {
+                        //check parameters legal
+                        final String tag_id;
+                        final String[] tag_ids;
+                        {
+                            if (p.containsKey("tag_id") == false) {
+                                throw new IllegalArgumentException("Missing parameter [tag_id]");
+                            }
+
+                            tag_id = p.get("tag_id").toString();
+                            tag_ids = tag_id.split(" ");
+                        }
                         //calc script score here
                         Double score = getScore();
                         try {

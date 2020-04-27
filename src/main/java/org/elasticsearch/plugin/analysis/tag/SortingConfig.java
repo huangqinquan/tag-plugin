@@ -1,6 +1,6 @@
 package org.elasticsearch.plugin.analysis.tag;
 
-public class TagScriptConfig {
+public class SortingConfig {
 
     public final static String SCRIPT_NAME = "tag_weight";
 
