@@ -16,7 +16,7 @@
         <elasticsearch.plugin.name>SortingPlugin</elasticsearch.plugin.name>
         <elasticsearch.plugin.classname>com.elasticsearch.plugin.TestPlugin</elasticsearch.plugin.classname>
         <elasticsearch.plugin.java.version>1.8</elasticsearch.plugin.java.version>
-        <elasticsearch.version>6.3.2</elasticsearch.version>
+        <elasticsearch.version>7.17.13</elasticsearch.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <junit.version>4.12</junit.version>
